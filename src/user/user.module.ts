@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [],
   controllers: [UserController],
   providers: [
     UserService,

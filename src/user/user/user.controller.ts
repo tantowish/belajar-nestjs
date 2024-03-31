@@ -18,6 +18,11 @@ export class UserController {
         private memberService: MemberService
     ) { }
 
+    @Get('/')
+    async getUser(): Promise<User[]>{
+        return this.userRepository.getUsers()
+    }
+
     @Get('/create')
     async create(@Query('firstName') firstName: string, @Query('lastName') lastName: string): Promise<User> {
         return this.userRepository.save(firstName, lastName)
