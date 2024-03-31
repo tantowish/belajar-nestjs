@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, HttpRedirectResponse, Inject, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpException, HttpRedirectResponse, Inject, Param, ParseIntPipe, Post, Query, Redirect, Req, Res, UseFilters } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
@@ -6,6 +6,9 @@ import { MailService } from '../mail/mail.service';
 import { UserRepository } from '../user-repository/user-repository';
 import { MemberService } from '../member/member.service';
 import { User } from '@prisma/client';
+import { ValidationFilter } from 'src/validation/validation.filter';
+import { LoginUserRequest, loginUserRequestValidation } from 'src/model/login.model';
+import { ValidationPipe } from 'src/validation/validation.pipe';
 
 @Controller('/api/users')
 export class UserController {
@@ -18,13 +21,27 @@ export class UserController {
         private memberService: MemberService
     ) { }
 
+    @UseFilters(ValidationFilter)
+    @Post('/login')
+    login(        
+        @Body(new ValidationPipe(loginUserRequestValidation)) request: LoginUserRequest
+    ){
+        return `Hello ${request.username}`
+    }
+
     @Get('/')
-    async getUser(): Promise<User[]>{
+    async getUser(): Promise<User[]> {
         return this.userRepository.getUsers()
     }
 
     @Get('/create')
     async create(@Query('firstName') firstName: string, @Query('lastName') lastName: string): Promise<User> {
+        if (!firstName) {
+            throw new HttpException({
+                code: 400,
+                errors: "firstName is required"
+            },400)
+        }
         return this.userRepository.save(firstName, lastName)
     }
 
@@ -40,6 +57,7 @@ export class UserController {
     }
 
     @Get('/hello')
+    @UseFilters(ValidationFilter)
     async sayHello(@Query('name') name: string): Promise<string> {
         return this.service.sayHello(name)
     }
@@ -91,7 +109,8 @@ export class UserController {
     // }
 
     @Get('/:id')
-    getById(@Param('id') id: BigInteger): string {
+    getById(@Param('id', ParseIntPipe) id: number): string {
+        console.info(id*10)
         return `GET ${id}`
     }
 
