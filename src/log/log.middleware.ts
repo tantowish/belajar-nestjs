@@ -5,11 +5,9 @@ import { Logger } from 'winston';
 
 @Injectable()
 export class LogMiddleware implements NestMiddleware {
-  constructor(
-    @Inject(WINSTON_MODULE_PROVIDER) private logger: Logger
-  ) { }
+  constructor(@Inject(WINSTON_MODULE_PROVIDER) private logger: Logger) {}
   use(req: Request, res: Response, next: () => void) {
-    this.logger.info(`Receive request for URL : ${req.url}`)
+    this.logger.info(`Receive request for URL : ${req.url}`);
     next();
   }
 }

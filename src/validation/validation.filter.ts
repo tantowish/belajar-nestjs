@@ -5,12 +5,12 @@ import { Response } from 'express';
 @Catch(ZodError)
 export class ValidationFilter<T> implements ExceptionFilter<ZodError> {
   catch(exception: ZodError, host: ArgumentsHost) {
-    const http = host.switchToHttp()
-    const response = http.getResponse<Response>()
+    const http = host.switchToHttp();
+    const response = http.getResponse<Response>();
 
     response.status(400).json({
       code: 400,
-      errors: exception.errors
-    })
+      errors: exception.errors,
+    });
   }
 }

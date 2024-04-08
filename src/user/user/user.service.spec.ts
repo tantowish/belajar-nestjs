@@ -13,7 +13,7 @@ describe('UserService', () => {
   });
 
   it('should be able to say hello', () => {
-    const response = service.sayHello('Tanto')
-    expect(response).toBe('Hello Tanto')
+    const response = service.sayHello('Tanto');
+    expect(response).toBe('Hello Tanto');
   });
 });

@@ -3,7 +3,7 @@ import { UserService } from './user/user/user.service';
 
 @Injectable()
 export class AppService {
-  constructor(private userService: UserService){}
+  constructor(private userService: UserService) {}
 
   getHello(): string {
     return 'Hello World!';

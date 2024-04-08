@@ -6,26 +6,27 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class UserRepository {
-    constructor(
-        private prismaService: PrismaService,
-        @Inject(WINSTON_MODULE_PROVIDER) private logger: Logger
-    ) {
-        console.info('Create user repository')
-        this.logger.info('Create user repository')
-    }
+  constructor(
+    private prismaService: PrismaService,
+    @Inject(WINSTON_MODULE_PROVIDER) private logger: Logger,
+  ) {
+    console.info('Create user repository');
+    this.logger.info('Create user repository');
+  }
 
-    async save(firstName: string, lastName?: string): Promise<User> {
-        this.logger.info(`Create user with firstName ${firstName} and lastName ${lastName}`)
-        return this.prismaService.user.create({
-            data: {
-                firstName: firstName,
-                lastName: lastName
-            }
-        })
-    }
+  async save(firstName: string, lastName?: string): Promise<User> {
+    this.logger.info(
+      `Create user with firstName ${firstName} and lastName ${lastName}`,
+    );
+    return this.prismaService.user.create({
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    });
+  }
 
-    async getUsers(): Promise<User[]> {
-        return this.prismaService.user.findMany()
-    }
+  async getUsers(): Promise<User[]> {
+    return this.prismaService.user.findMany();
+  }
 }
-

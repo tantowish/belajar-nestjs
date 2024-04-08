@@ -27,10 +27,10 @@ describe('AppController (e2e)', () => {
       .get('/api/users/hello')
       .query({
         firstName: 'Tantowi',
-        lastName: 'Shah'
-      })
+        lastName: 'Shah',
+      });
 
-    expect(result.status).toBe(200)
-    expect(result.text).toBe('Hello Tantowi Shah')
+    expect(result.status).toBe(200);
+    expect(result.text).toBe('Hello Tantowi Shah');
   });
 });

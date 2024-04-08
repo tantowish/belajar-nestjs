@@ -2,7 +2,7 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { ValidationService } from './validation/validation.service';
 
 @Module({
-  providers: [ValidationService]
+  providers: [ValidationService],
 })
 export class ValidationModule {
   static forRoot(isGlobal: boolean): DynamicModule {
@@ -10,7 +10,7 @@ export class ValidationModule {
       module: ValidationModule,
       global: true,
       providers: [ValidationService],
-      exports: [ValidationService]
-    }
+      exports: [ValidationService],
+    };
   }
 }
